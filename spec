@@ -1,0 +1,68 @@
+architecture specification for endianless
+
+by Susan Werner (heinousbutch@gmail.com / @pyroshy) 
+
+
+Flat 14-bit wide address space shared between code and data -- no segmenting 
+or such. Execution starts at zero. All instructions are two bytes long, with 
+a two bit component for the opcode and 14 bits for the address. There are two 
+registers, the accumulator and the program counter. The accumulator is 16 
+bits wide, and the program counter is 14 bits wide. There is a single carry 
+flag.
+
+Memory is only word-addressed, not byte addressed. There are only word-fetches
+and stores -- no byte stores/fetches and no doubleword fetches/stores. There is 
+thus no concept of endianness in the ISA or hardware. If you are manipulating 
+quantities longer than 16 bits, it's up to you to keep your word order 
+straight. 
+
+Execution begins at 0x3fff (2^14-1), the the end of the address space. A jump
+instruction to the beginning of an actual program is to be stored at 0x3fff. 
+If control flow reaches 0x3fff again, whether by jumping to it or incrementing
+the program counter from 0x3ffe, execution halts. Without a measure like this,
+a program cannot halt itself. 
+
+Reading from and storing to 0x3fff is without any exceptional effect.
+
+Execution does not begin at 0x0000 as to leave the memory around 0x0000 
+free of anything -- it is a bit easier to do things related to indirect 
+addressing from 0x0000 up rather than by going down from 0x3fff. 
+
+
+An instruction looks like this:
+
+MSB                             LSB
+ |                               |
+ V                               |
+                                 V
+ 0                   1           
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|o p|         address             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+
+opcodes are as follows. unless otherwise specified, the program counter is 
+incremented by one after each instruction is executed (pc <- pc + 1).
+
+00 NAND [address] 
+acc <- acc NAND *address
+
+
+01 ADD [address]  
+acc <- acc ADD *address
+if the addition generates a carry out of the most significant bit, the carry 
+flag is set. 
+
+
+10 STORE [address]
+*address <- acc
+
+
+11 JNC [address]
+
+if carry is set, unset carry, and pc <- address
+if carry is unset, move on to the next instruction as usual (pc <- pc + 1 )
+
+
