@@ -1,0 +1,25 @@
+-----Emulator-----
+make an emulator
+
+
+-----assembler-----
+update assembler to work on the 16-bit version of endianless (the original 
+assembler was built for the 8 bit version)
+
+add address-of functionality -- like, be able to substitute the address of 
+labeled code or data in a given data location:
+
+foo DB 01 13 ; normal declaration of data, already implemented
+
+bar DB foo   ; puts the address of foo in bar
+
+buzzy DB xor ; puts the address of xor in buzzy
+
+xor: ;label of some code
+NAND ZERO
+NAND ONES
+
+
+Add macro support
+
+
