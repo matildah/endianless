@@ -3,12 +3,13 @@ architecture specification for endianless
 by Susan Werner (heinousbutch@gmail.com / @pyroshy) 
 
 
-Flat 14-bit wide address space shared between code and data -- no segmenting 
-or such. Execution starts at zero. All instructions are two bytes long, with 
-a two bit component for the opcode and 14 bits for the address. There are two 
-registers, the accumulator and the program counter. The accumulator is 16 
-bits wide, and the program counter is 14 bits wide. There is a single carry 
-flag.
+There is a flat 14-bit wide address space shared between code and data -- no 
+segmenting or such. Execution starts at zero. All instructions are two bytes 
+long, with a two bit component for the opcode and 14 bits for the address. 
+
+There are two registers, the accumulator and the program counter. The 
+accumulator is 16 bits wide, and the program counter is 14 bits wide. There is 
+a single carry flag.
 
 Memory is only word-addressed, not byte addressed. There are only word-fetches
 and stores -- no byte stores/fetches and no doubleword fetches/stores. There is 
