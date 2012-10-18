@@ -1,0 +1,22 @@
+endianless
+
+specification, assembler, and emulator for the "endianless" architecture, 
+along with code for it. 
+
+
+endianless is a 16 bit, word-addressed RISC architecture with a 14 bit address 
+space and with only one register (the accumulator) and four instructions (add, 
+nand, store, and jump if carry not set). Since the only fetches and stores are 
+on 16 bit words, there is no concept of endianness in the hardware (hence the 
+name of the architecture).
+
+This architecture is based on the architecture I used at [redacted] class at
+[redacted] university, which worked on 8-bit words and had a 6 bit address 
+space. In the original arch, instructions were a byte long (opcode takes up two
+bits, address takes up six). I extended the instruction size to two bytes (two 
+bis for opcode, 14 for address). I then decided to increase the word size from 
+one byte to two -- otherwise it's impossible to hold an address nor an 
+instruction in the accumulator. These are the only changes that have been made.
+
+The eventual goal is to implement SHA-3 (Keccak) in this architecture.
+
