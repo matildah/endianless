@@ -1,11 +1,12 @@
 #!/usr/bin/perl
 
+# 8-bit endianless assembler
 
 use warnings;
 use strict;
 
 
-# This program takes a file containing micro microprocessor assembly as its
+# This program takes a file containing endianless assembly as its
 # first argument, and outputs on stdout an assembled version of the code.
 
 # This assembler is not meant to demonstrate proper programming practice.
@@ -127,6 +128,6 @@ while (<INF>) {
 
    $goodline = 0;
 }
-#$addy--;
-#print "00\n" x (63 - $addy);
+$addy--;
+print "00\n" x (63 - $addy);
 
