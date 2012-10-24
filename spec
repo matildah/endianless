@@ -1,6 +1,6 @@
 architecture specification for endianless
 
-by Susan Werner (heinousbutch@gmail.com / @pyroshy) 
+by Susan Werner (heinousbutch@gmail.com)
 
 
 There is a flat 14-bit wide address space shared between code and data -- no 
