@@ -1,0 +1,6 @@
+foo:
+ZERO    DB  0  
+NAND ZERO
+ADD  ZERO
+ST   ZERO
+JNC  foo
