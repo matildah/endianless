@@ -30,8 +30,9 @@ nprime   DB  0000 ; variable we iterate over. basically, instead of going from
 
 memcpy:
 
-NAND ZERO
-NAND n
+NAND ZERO ; acc = 0xffff
+NAND n ; acc = acc ^ 0xffff
+ADD ONE ; acc = n ^ 0xffff + 1 = -n 
 ST nprime ; stores -n in nprime
 
 
