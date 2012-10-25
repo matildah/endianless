@@ -32,7 +32,7 @@ memcpy:
 
 NAND ZERO
 NAND n
-ST nprime
+ST nprime ; stores -n in nprime
 
 
 
