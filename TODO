@@ -3,6 +3,11 @@ make an emulator
 
 
 -----assembler-----
+Add a feature to add 0x4001 to constants used to represent addresses of code 
+to be jumped to -- instead of computing the jump instruction at runtime, this 
+computes the jump instruction at assembly time. 
+
+
 update assembler to work on the 16-bit version of endianless (the original 
 assembler was built for the 8 bit version)
 
