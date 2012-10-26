@@ -9,6 +9,9 @@ fdest   DB  0000 ; dest + 1 + 0x4000 -- we can do this fixup at assembly-time
 
 JNCINSTPLUS DB 4001 ; opcode for JNC plus one
 
+
+
+
 jump:           ; jumps to the address stored at dest
 NAND ZERO       ; acc = 0xffff
 ADD JNCINSTPLUS ; acc = 0x4000, carry flag is set
@@ -28,7 +31,7 @@ fjump:     ; takes fake "addresses" -- the jump opcode 0x4000 plus the
 
 
 NAND ZERO  ; acc = 0xffff
-ADD dest   ; acc = dest - 1, carry flag gets set
+ADD fdest  ; acc = fdest - 1 = 0x4000 + destination. carry flag gets set
 ST jinst3  ; stores acc, so we can execute it
 JNC hell   ; does not jump. unsets carry flag
 jinst3:
