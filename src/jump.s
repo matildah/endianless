@@ -1,13 +1,13 @@
-ZERO    DB  0000 ; all bits zero
-ONES    DB  FFFF ; all bits one
-ONE     DB  0001 ; one!
-JNCINST DB  4000 ; opcode for JNC
-hell    DB  3fff ; the address that halts execution when we jump to 
-dest    DB  0000 
-fdest   DB  0000 ; dest + 1 + 0x4000 -- we can do this fixup at assembly-time
+ZERO        DB  0000 ; all bits zero
+ONES        DB  FFFF ; all bits one
+ONE         DB  0001 ; one!
+JNCINST     DB  4000 ; opcode for JNC
+JNCINSTPLUS DB  4001 ; opcode for JNC plus one
+hell        DB  3fff ; the address that halts execution when we jump to 
+dest        DB  0000 
+fdest       DB  0000 ; dest + 1 + 0x4000 -- we can do this fixup at assembly-time
 
 
-JNCINSTPLUS DB 4001 ; opcode for JNC plus one
 
 
 
