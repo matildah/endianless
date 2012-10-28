@@ -1,2 +1,5 @@
-Code written in endianless is stored here -- right now, only small routines are
-being built, such as memcpy, and a pointer dereference routine. 
+gcd.s    -- 8-bit endianless code for euclid's algorithm
+jump.s   -- jumps to an address stored in a given position
+xor.s    -- does xor on 64-bit quantities
+memcpy.s -- copies n words from src to dest. 
+            this is also where i'm figuring out how to do for loops
