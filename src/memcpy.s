@@ -52,12 +52,29 @@ nprime   DB  0000
 ; Also, we have basically two choices for how to move the loop index -- from
 ; zero to b or from 0xffff - b to zero. 
 ; 
+; 0 to b
+; i DB 0000 
+; bprime  DB 0000 
+
+; if b = 0x2, we want to have an overflow at i = 0x2 => i -1  = 0x1. so we need 
+; a bprime value of 0xffff. b = 0x3 => bprime = 0xfffe,
+
+
+
+; entry:
+; 
+; test: 
+; NAND ZERO
+; ADD i ; acc = i - 1 
+; ADD bprime ; acc = i - 1 + bprime
 ; 
 ; 
 ; 
-;
-;
-;
+; 
+; [loop body]
+; 
+; JNC test
+; JNC test
 ;
 
 
