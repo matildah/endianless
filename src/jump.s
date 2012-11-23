@@ -41,8 +41,7 @@ JNC hell   ; acc gets stored here and gets executed
 
 
 
-jump3: ;jumps to the address held in the word at dest. more efficient version 
-       ; exists in the "jump" routine
+jump3: ;jumps to the address held in the word at dest. inefficient version
 NAND ZERO ; acc = 0xffff
 ADD ONE ; acc = 0x0000 *and* carry flag IS SET
 JNC hell; will not jump because carry flag is set, but UNSETS carry flag
