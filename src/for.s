@@ -50,24 +50,29 @@ init ; can be skipped if b is known at assmebly time. if i had an optimizing
 
 NAND ZERO ; acc = 0xffff
 NAND n ; acc = acc ^ 0xffff
-ADD ONE ; acc = n ^ 0xffff + 1 = -n 
-ST bprime ; stores -n in nprime
+;ADD ONE ; acc = n ^ 0xffff + 1 = -n 
+ST bprime ; stores -n - 1  in nprime
 
 ; ^ can be optimized away
 
 entry: 
 NAND ZERO
-NAND ONES
+NAND ONES ; acc = 0
 ADD i ; acc = i 
-ADD bprime ; acc = i + bprime
+ADD ONE ; acc = i + 1
+ST i
+ADD bprime ; acc = i + 1 + ( -n -1) = i - n 
 
+JNC loop
+JNC exit
+loop:
 ; 
 ; [loop body]
 ;
 JNC entry
 JNC entry
 
-
+exit:
 
 
 
