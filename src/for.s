@@ -49,28 +49,30 @@ init ; can be skipped if b is known at assmebly time. if i had an optimizing
      ; assembler this would be optimized away 
 
 NAND ZERO ; acc = 0xffff
-NAND n ; acc = acc ^ 0xffff
-;ADD ONE ; acc = n ^ 0xffff + 1 = -n 
+NAND n    ; acc = acc ^ 0xffff
+;ADD ONE  ; acc = n ^ 0xffff + 1 = -n 
 ST bprime ; stores -n - 1  in nprime
 
 ; ^ can be optimized away
 
 entry: 
 NAND ZERO
-NAND ONES ; acc = 0
-ADD i ; acc = i 
-ADD ONE ; acc = i + 1
+NAND ONES  ; acc = 0
+ADD i      ; acc = i 
+ADD ONE    ; acc = i + 1
 ST i
 ADD bprime ; acc = i + 1 + ( -n -1) = i - n 
 
 JNC loop
 JNC exit
+
 loop:
 ; 
 ; [loop body]
 ;
-JNC entry
-JNC entry
+
+JNC entry ; unconditional jump back to entry
+JNC entry ; ^
 
 exit:
 
