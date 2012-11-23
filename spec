@@ -61,7 +61,7 @@ flag is set.
 *address <- acc
 
 
-11 JNC [address]
+11 JNC [address] -- Jump if Not Carry
 
 if carry is unset, unset carry, and pc <- address
 if carry is set, move on to the next instruction as usual (pc <- pc + 1 )
