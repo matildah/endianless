@@ -44,7 +44,7 @@ nprime  DB 0000
 ; if n = 0x0003, we want to have an overflow when we add 0x0003 + nprime. 
 ; therefore nprime = 0x10000-0x0003 = 0xfffd = -n 
 
-init:       ; can be skipped if n is known at assmebly time. if i had an optimizing 
+init:       ; can be skipped if n is known at assembly time. if i had an optimizing
             ; assembler this would be optimized away 
 
 NAND ZERO   ; acc = 0xffff
@@ -52,7 +52,7 @@ NAND n      ; acc = n ^ 0xffff
 ADD  ONE    ; acc = n ^ 0xffff + 1 = -n 
 ST   nprime ; stores -n in nprime
 
-; ^ can be optimized away if we know n at assembly time
+; ^ can be optimized away if we know n at assembly time and thus set nprime 
 
 init2:      ; entry point if nprime is already set 
             ; all we need to do is zero acc, set i = 0 and unset the carry flag
@@ -64,7 +64,7 @@ JNC  hell   ; carry is set, so we don't jump. this unsets the carry though.
 ST   i      ; store zero in i
 
 
-            ; loop test -- we need acc = i and carry not set for the test
+test:       ; loop test -- we need acc = i and carry not set for the test
 ADD  nprime ; acc = i + ( -n ) = i - n 
 
 JNC  loop   ; jumps to the loop body if there's no carry. if there is a carry,
