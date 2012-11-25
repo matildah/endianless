@@ -34,45 +34,57 @@ NANDINST DB  0000 ; opcode for NAND
 
 
 
-; 0 to b
+; 0 to n
 
 i       DB 0000
-b       DB 0000
-bprime  DB 0000 
+n       DB 0000
+nprime  DB 0000 
 
-; if b = 0x0003, we want to have an overflow when we add 0x0003 + bprime. 
-; therefore bprime = 0x10000-0x0003 = 0xfffd = -n 
+; if n = 0x0003, we want to have an overflow when we add 0x0003 + nprime. 
+; therefore nprime = 0x10000-0x0003 = 0xfffd = -n 
+
+init:       ; can be skipped if n is known at assmebly time. if i had an optimizing 
+            ; assembler this would be optimized away 
+
+NAND ZERO   ; acc = 0xffff
+NAND n      ; acc = n ^ 0xffff
+ADD  ONE    ; acc = n ^ 0xffff + 1 = -n 
+ST   nprime ; stores -n in nprime
+
+; ^ can be optimized away if we know n at assembly time
+
+init2:      ; entry point if nprime is already set 
+            ; all we need to do is zero acc, set i = 0 and unset the carry flag
+            ; so the first time we run the test we go into the loop.
+
+NAND ZERO   ; acc = 0xffff
+ADD  ONE    ; acc = 0x0000, carry set
+JNC  hell   ; carry is set, so we don't jump. we unset the carry though.
+ST   i      ; store zero in i
 
 
+test:       ; we assume that acc = i, and we don't have carry set. 
+ADD  nprime ; acc = i + ( -n ) = i - n 
 
-init ; can be skipped if b is known at assmebly time. if i had an optimizing 
-     ; assembler this would be optimized away 
+JNC  loop   ; jumps to the loop body if there's no carry. if there is a carry,
+            ; it unsets carry, and we go to the next instruction
 
-NAND ZERO ; acc = 0xffff
-NAND n    ; acc = acc ^ 0xffff
-;ADD ONE  ; acc = n ^ 0xffff + 1 = -n 
-ST bprime ; stores -n - 1  in nprime
-
-; ^ can be optimized away
-
-entry: 
-NAND ZERO
-NAND ONES  ; acc = 0
-ADD i      ; acc = i 
-ADD ONE    ; acc = i + 1
-ST i
-ADD bprime ; acc = i + 1 + ( -n -1) = i - n 
-
-JNC loop
-JNC exit
+JNC  exit   ; we had a carry from the ADD, so now we need an exit
 
 loop:
 ; 
 ; [loop body]
 ;
 
-JNC entry ; unconditional jump back to entry
-JNC entry ; ^
+; increment i 
+NAND ZERO   ; acc = 0xffff
+NAND ONES   ; acc = 0x0000
+ADD i       ; acc = i 
+ADD ONE     ; acc = i + 1
+ST i        ; i   = i + 1
+
+JNC test    ; unconditional jump back to test 
+JNC test    ; ^
 
 exit:
 
