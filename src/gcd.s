@@ -6,6 +6,11 @@
 ; 16 Nov 2009 [scrubbed] : Began implementation
 ; 16 Nov 2009 [scrubbed] : Finished and tested implementation
 
+
+
+
+
+
 ;Code
 
 ;Main loop entry point
@@ -22,7 +27,7 @@ ST   TMP
 
 ; we now test the MSB. if it is high, acc < 0, and a > b.
 NAND HM; nand acc with 0x10
-NAND ONES; now, acc contains (b - a) ^ 0x10
+NAND ONES; now, acc contains (b - a) AND 0x10
 
 ; we now test acc == 0. If so, we go to the b => a condition
 ADD  ONES
@@ -33,7 +38,7 @@ JNC  dpz
 
 ;load  -tmp into acc
 NAND ZERO   ; acc = FF
-NAND TMP; acc = FF nand tmp = 0xFF ^ tmp
+NAND TMP; acc = FF nand tmp = 0xFF xor tmp
 ADD  ONE    ; acc = -tmp
 
 ;store a -b into a
@@ -47,7 +52,7 @@ JNC  ltest   ; since carry must be low, we jump
 dpz:
 ; we load tmp = b - a into acc, and store it into b
 NAND ZERO   ; acc = FF
-NAND TMP; acc = 0xFF ^ tmp
+NAND TMP; acc = 0xFF xor tmp
 NAND ONES   ; acc = tmp
 
 ST   b
