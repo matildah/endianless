@@ -3,6 +3,7 @@
 ZERO     DB  0000 ; all bits zero
 ONES     DB  FFFF ; all bits one
 ONE      DB  0001 ; one
+TWO      DB  0002 ; two
 ADDINST  DB  4000 ; opcode for ADD
 NANDINST DB  0000 ; opcode for NAND
 
@@ -59,11 +60,11 @@ init2:      ; entry point if nprime is already set
 
 NAND ZERO   ; acc = 0xffff
 ADD  ONE    ; acc = 0x0000, carry set
-JNC  hell   ; carry is set, so we don't jump. we unset the carry though.
+JNC  hell   ; carry is set, so we don't jump. this unsets the carry though.
 ST   i      ; store zero in i
 
 
-test:       ; we assume that acc = i, and we don't have carry set. 
+            ; loop test -- we need acc = i and carry not set for the test
 ADD  nprime ; acc = i + ( -n ) = i - n 
 
 JNC  loop   ; jumps to the loop body if there's no carry. if there is a carry,
@@ -78,9 +79,8 @@ loop:
 
 ; increment i 
 NAND ZERO   ; acc = 0xffff
-NAND ONES   ; acc = 0x0000
-ADD i       ; acc = i 
-ADD ONE     ; acc = i + 1
+ADD TWO     ; acc = 0x0001
+ADD i       ; acc = i + 1
 ST i        ; i   = i + 1
 
 JNC test    ; unconditional jump back to test 
