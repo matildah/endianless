@@ -52,7 +52,11 @@ NAND n      ; acc = n ^ 0xffff
 ADD  ONE    ; acc = n ^ 0xffff + 1 = -n 
 ST   nprime ; stores -n in nprime
 
-; ^ can be optimized away if we know n at assembly time and thus set nprime 
+
+; the following code does what init2 does but with one less instruction
+; ADD  n
+; ST   i
+; JNC  hell
 
 init2:      ; entry point if nprime is already set 
             ; all we need to do is zero acc, set i = 0 and unset the carry flag
@@ -64,7 +68,7 @@ JNC  hell   ; carry is set, so we don't jump. this unsets the carry though.
 ST   i      ; store zero in i
 
 
-test:       ; loop test -- we need acc = i and carry not set for the test
+test:       ; loop test -- we need acc = i and carry unset
 ADD  nprime ; acc = i + ( -n ) = i - n 
 
 JNC  loop   ; jumps to the loop body if there's no carry. if there is a carry,
