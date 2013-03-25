@@ -9,7 +9,11 @@ import array
 # and when the reset instruction is executed
 
 
+
+
 class CPU:
+    """CPU object -- holds state of a CPU, memory, and breakpoints"""
+
     RESET_VECTOR = 0x3fff 
 
     def __init__(self, initial_memory, breakpoints=[]):
