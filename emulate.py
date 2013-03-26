@@ -55,6 +55,13 @@ class CPU:
 
             print(self.pc)
 
+            inst = self.memory[self.pc] 
+            print(inst)
+            
+            opcode = inst & 0xC000
+            addr   = inst & 0x3fff
+
+
             self.pc = (self.pc + 1) % (2**14)
 
             self.cycles += 1
