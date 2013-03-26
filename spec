@@ -32,15 +32,15 @@ addressing from 0x0000 up rather than by going down from 0x3fff.
 
 An instruction looks like this:
 
-MSB                             LSB
- |                               |
- V                               |
-                                 V
+MSB                           LSB
+ |                             |
+ V                             |
+                               V
  0                   1           
- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|o p|         address             |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|o p|         address           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
 
