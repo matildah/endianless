@@ -78,9 +78,14 @@ class CPU:
                 self.memory[addr] = self.acc
                 self.pc = (self.pc + 1) % (2**14)
 
-            elif opcode == 0xC000: # jnc
+            elif opcode == 0xC000: # jump if carry isn't set
                 print("jnc")
-              
+                if self.carry == True:
+                    self.carry = False
+                    self.pc = (self.pc + 1) % (2**14)
+                else:
+                    self.pc = self.memory[addr]
+
             else:                  # something went seriously wrong
                 assert 1 == 0      # so we ruin everything
 
