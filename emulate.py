@@ -62,17 +62,29 @@ class CPU:
 
             if   opcode == 0x0000: # nand
                 print("nand")
+                self.acc = ~ (self.acc & self.memory[addr])
+                self.pc = (self.pc + 1) % (2**14)
+
             elif opcode == 0x4000: # add
                 print("add")
+                result = self.acc + self.memory[addr]
+                if (result % (2 ** 16) != result):
+                    self.carry = True
+                self.acc = result % (2 ** 16)
+                self.pc = (self.pc + 1) % (2**14)
+
             elif opcode == 0x8000: # store
                 print("store")
+                self.memory[addr] = self.acc
+                self.pc = (self.pc + 1) % (2**14)
+
             elif opcode == 0xC000: # jnc
                 print("jnc")
-            else:                  # something seriously wrong
-                assert 1 == 0 
+              
+            else:                  # something went seriously wrong
+                assert 1 == 0      # so we ruin everything
 
 
-            self.pc = (self.pc + 1) % (2**14)
 
             self.cycles += 1
 
