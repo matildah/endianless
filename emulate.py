@@ -53,13 +53,11 @@ class CPU:
             if (self.pc in self.breakpoints):
                 break
 
-            print(self.pc)
 
             inst = self.memory[self.pc] 
-            
             opcode = inst & 0xC000
             addr   = inst & 0x3fff
-
+            print (addr)
             if   opcode == 0x0000: # nand
                 print("nand")
                 self.acc = ~ (self.acc & self.memory[addr])
@@ -80,11 +78,12 @@ class CPU:
 
             elif opcode == 0xC000: # jump if carry isn't set
                 print("jnc")
-                if self.carry == True:
-                    self.carry = False
-                    self.pc = (self.pc + 1) % (2**14)
-                else:
-                    self.pc = self.memory[addr]
+                if self.carry == True:                  # carry set, so we 
+                    self.carry = False                  # unset it
+                    self.pc = (self.pc + 1) % (2**14)   # and don't jump
+
+                else:                                   # carry isn't set, so
+                    self.pc = addr                      # we jump
 
             else:                  # something went seriously wrong
                 assert 1 == 0      # so we ruin everything
@@ -98,6 +97,6 @@ class CPU:
 
 
 if __name__ == "__main__":
-    mem = array.array('i',[0x0000] * (2**14))
+    mem = array.array('i',[0xffff] * (2**14))
     cpu = CPU(mem, [0xf])
     cpu.run(100)
