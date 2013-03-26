@@ -84,19 +84,22 @@ class CPU:
 
                 else:                                   # carry isn't set, so
                     self.pc = addr                      # we jump
+                    print("jumping to", addr)
 
             else:                  # something went seriously wrong
                 assert 1 == 0      # so we ruin everything
 
-
+            print("loldone")
 
             self.cycles += 1
-
+            
 
 
 
 
 if __name__ == "__main__":
-    mem = array.array('i',[0xffff] * (2**14))
-    cpu = CPU(mem, [0xf])
+    mem = array.array('H',[0x8ffe] * (2**14))
+    a = open("output",'wb')
+    cpu = CPU(mem)
     cpu.run(100)
+    mem.tofile(a)
