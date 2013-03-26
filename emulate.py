@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 # 16-bit endianless emulator
+# by susan werner <heinousbutch@gmail.com> 
 
 import array
 
@@ -49,10 +50,12 @@ class CPU:
                 break
             if (self.pc == self.RESET_VECTOR) and (self.cycles != 0):
                 break
+            if (self.pc in self.breakpoints):
+                break
 
-            print(self.cycles)
+            print(self.pc)
 
-            self.pc += 1
+            self.pc = (self.pc + 1) % (2**14)
 
             self.cycles += 1
 
@@ -62,5 +65,5 @@ class CPU:
 
 if __name__ == "__main__":
     mem = array.array('i',[0x0000] * (2**14))
-    cpu = CPU(mem)
-    cpu.run(10)
+    cpu = CPU(mem, [0xf])
+    cpu.run(100)
