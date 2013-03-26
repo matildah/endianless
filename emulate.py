@@ -56,10 +56,20 @@ class CPU:
             print(self.pc)
 
             inst = self.memory[self.pc] 
-            print(inst)
             
             opcode = inst & 0xC000
             addr   = inst & 0x3fff
+
+            if   opcode == 0x0000: # nand
+                print("nand")
+            elif opcode == 0x4000: # add
+                print("add")
+            elif opcode == 0x8000: # store
+                print("store")
+            elif opcode == 0xC000: # jnc
+                print("jnc")
+            else:                  # something seriously wrong
+                assert 1 == 0 
 
 
             self.pc = (self.pc + 1) % (2**14)
