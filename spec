@@ -63,7 +63,7 @@ flag is set.
 
 11 JNC [address] -- Jump if Not Carry
 
-if carry is unset, unset carry, and pc <- address
-if carry is set, move on to the next instruction as usual (pc <- pc + 1 )
+if carry is unset, jump: pc <- *address
+if carry is set, unset carry, and move on to the next instruction as usual 
 
 
