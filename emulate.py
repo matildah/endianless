@@ -98,7 +98,7 @@ class CPU:
             else:                  # something went seriously wrong
                 assert 1 == 0      # so we ruin everything
 
-            print("loldone")
+            print(self.acc)
 
             self.cycles += 1
             
@@ -112,5 +112,5 @@ if __name__ == "__main__":
     a = open("output",'rb')
     mem.fromfile(a,2**14)
     cpu = CPU(mem)
-    cpu.run(100)
+    cpu.run(1000000)
     mem.tofile(a)
