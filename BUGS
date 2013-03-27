@@ -1,0 +1,2 @@
+The parts of the code involving sign extension, carry generation, and adding
+are very likely wrong in very insidious ways.
