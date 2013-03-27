@@ -3,6 +3,7 @@
 # 16-bit endianless emulator
 # by susan werner <heinousbutch@gmail.com> 
 
+import random
 import array
 
 # input: assembled endianless-16 code
@@ -34,6 +35,13 @@ class CPU:
 
         self.cycles = 0      # cycles elapsed since start
 
+    
+    def signextend(self, i):
+        if i > 2**15 -1:
+            i = i - 2**16
+        return i
+
+        
 
     def run(self, runcycles=0):
         """runs the CPU for the given number of cycles or until the CPU 
@@ -60,20 +68,21 @@ class CPU:
             print (addr)
             if   opcode == 0x0000: # nand
                 print("nand")
-                self.acc = ~ (self.acc & self.memory[addr])
+                self.acc = ~ (self.acc & self.signextend(self.memory[addr]))
                 self.pc = (self.pc + 1) % (2**14)
 
             elif opcode == 0x4000: # add
                 print("add")
-                result = self.acc + self.memory[addr]
+                result = self.acc + self.signextend(self.memory[addr])
                 if (result % (2 ** 16) != result):
                     self.carry = True
-                self.acc = result % (2 ** 16)
+                self.acc = result & (2 ** 16-1)
                 self.pc = (self.pc + 1) % (2**14)
 
             elif opcode == 0x8000: # store
-                print("store")
-                self.memory[addr] = self.acc
+                print("storing")
+                print(self.acc)
+                self.memory[addr] = self.acc & (2 ** 16 - 1)
                 self.pc = (self.pc + 1) % (2**14)
 
             elif opcode == 0xC000: # jump if carry isn't set
@@ -98,8 +107,10 @@ class CPU:
 
 
 if __name__ == "__main__":
-    mem = array.array('H',[0x8ffe] * (2**14))
-    a = open("output",'wb')
+    #mem = array.array('H',[0x8abc] * (2**14))
+    mem = array.array('H')
+    a = open("output",'rb')
+    mem.fromfile(a,2**14)
     cpu = CPU(mem)
     cpu.run(100)
     mem.tofile(a)
