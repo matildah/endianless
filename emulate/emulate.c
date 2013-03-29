@@ -149,12 +149,11 @@ void load_vm(struct vm_state *vm, FILE *infile)
         /* ok, now we've taken care of all the possible error conditions, so we
            can assume we've read two bytes into a and b */
         
-        if (curwrite - vm->memory ==  MEMORY_SIZE)
+        if (curwrite - vm->memory == MEMORY_SIZE  )
         {
             fprintf(stderr, "too many words in the memory dump file to fit in memory, halting!\n");
             exit(3);
         }
-
         *curwrite = a * 256 + b;
         curwrite++;
 
