@@ -1,5 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
 #include <stdint.h>
-
+#include <assert.h>
 #define RESET_VECTOR 0x3fffU
 
 #define MAX_BREAKPOINTS 1024    /* maximum number of breakpoints you can have 
@@ -8,8 +11,11 @@
 #define MEMORY_SIZE     16384   /* number of *words* in the memory space of the
                                    vm */
 
-struct 
-vm_state
+
+struct vm_state *initialize_vm();
+void load_vm(struct vm_state *vm, FILE *infile);
+
+struct vm_state
 {
     uint32_t acc;               /* accumulator + carry bit -- the accumulator
                                  is only 16 bits wide, but we use the bit above
@@ -26,5 +32,6 @@ vm_state
                                               stop execution */
 
 };
+
 
 
