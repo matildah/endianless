@@ -93,7 +93,6 @@ void load_vm(struct vm_state *vm, FILE *infile)
     uint16_t *curwrite = NULL;  /* pointer to the beginning of where we're currently 
                                  writing */
      
-    int total_written = 0 ;     /* total number of words written to the array */
 
     assert(vm != NULL);
 
@@ -129,14 +128,14 @@ void load_vm(struct vm_state *vm, FILE *infile)
             {
                 /* we reached EOF, we're done reading */
                 
-                if (total_written == 0)
+                if (curwrite - vm->memory == 0)
                 {
                     /* reached EOF but didn't do anything useful in this 
                        function */
 
                     fprintf(stderr, "we didn't read any words into the memory array, are you sure all is OK?\n");
                 }
-            fprintf(stderr, "we read %d words into memory\n", total_written);
+            fprintf(stderr, "we read %d words into memory\n", curwrite - vm->memory);
             return; /* our work here is done 'cuz we don't have anything more
                      to read */
             }
@@ -149,9 +148,17 @@ void load_vm(struct vm_state *vm, FILE *infile)
         
         /* ok, now we've taken care of all the possible error conditions, so we
            can assume we've read two bytes into a and b */
+        
+        if (curwrite - vm->memory ==  MEMORY_SIZE)
+        {
+            fprintf(stderr, "too many words in the memory dump file to fit in memory, halting!\n");
+            exit(3);
+        }
 
         *curwrite = a * 256 + b;
-        total_written++; 
+        curwrite++;
+
+
 
     }
 
