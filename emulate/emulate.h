@@ -14,7 +14,7 @@
 
 struct vm_state *initialize_vm();
 void load_vm(struct vm_state *vm, FILE *infile);
-
+uint32_t run_vm(struct vm_state *myvm, uint32_t runcycles);
 struct vm_state
 {
     uint32_t acc;               /* accumulator + carry bit -- the accumulator
@@ -26,8 +26,6 @@ struct vm_state
     uint16_t memory[MEMORY_SIZE];     /* memory for the cpu, 2^14 elements, each 
                                    2 bytes wide */
 
-    uint32_t cycles;            /* cycles elapsed since start */
-    
     uint16_t breakpoints[MAX_BREAKPOINTS]; /* array of addresses at which we 
                                               stop execution */
 
