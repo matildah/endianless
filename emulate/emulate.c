@@ -41,6 +41,7 @@ struct vm_state *initialize_vm()
     int i = 0;
 
     newvm = (struct vm_state *)malloc(sizeof(struct vm_state));
+    assert(newvm != NULL);
 
     newvm->pc=0;
     newvm->acc=0;
@@ -135,7 +136,7 @@ void load_vm(struct vm_state *vm, FILE *infile)
 
                     fprintf(stderr, "we didn't read any words into the memory array, are you sure all is OK?\n");
                 }
-            fprintf(stderr, "we read %d words into memory\n", curwrite - vm->memory);
+            fprintf(stderr, "we read %ld words into memory\n", curwrite - vm->memory);
             return; /* our work here is done 'cuz we don't have anything more
                      to read */
             }
@@ -149,7 +150,7 @@ void load_vm(struct vm_state *vm, FILE *infile)
         /* ok, now we've taken care of all the possible error conditions, so we
            can assume we've read two bytes into a and b */
         
-        if (curwrite - vm->memory == MEMORY_SIZE  )
+        if (curwrite - vm->memory >= MEMORY_SIZE  )
         {
             fprintf(stderr, "too many words in the memory dump file to fit in memory, halting!\n");
             exit(3);
@@ -162,3 +163,13 @@ void load_vm(struct vm_state *vm, FILE *infile)
     }
 
 }
+
+
+
+uint32_t run_vm(struct vm_state *myvm, uint32_t ncycles) 
+    /* runs the VM described at myvm for ncycle cycles and returns the number
+       of cycles executed (this may be lower than ncycle -- if the instruction
+       pointer hits the reset vector) */
+{
+}
+
