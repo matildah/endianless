@@ -166,10 +166,18 @@ void load_vm(struct vm_state *vm, FILE *infile)
 
 
 
-uint32_t run_vm(struct vm_state *myvm, uint32_t ncycles) 
-    /* runs the VM described at myvm for ncycle cycles and returns the number
-       of cycles executed (this may be lower than ncycle -- if the instruction
-       pointer hits the reset vector) */
+uint32_t run_vm(struct vm_state *myvm, uint32_t runcycles) 
+    /* runs the VM described at myvm for runcycles cycles and returns the number
+       of cycles executed (this may be lower than runcycles -- if the instruction
+       pointer hits the reset vector) 
+     
+       if runcycles == 0, we run for infinitely many cycles */
 {
+    uint32_t cycle;
+
+    for (cycle = 0; (cycle < runcycles) || (runcycles == 0 ); cycle ++)
+    {
+    }
+
 }
 
