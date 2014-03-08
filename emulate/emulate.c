@@ -30,6 +30,7 @@ int main(int argc, char **argv)
 
     myvm = initialize_vm();
     load_vm(myvm, in);
+    run_vm(myvm, runcycles);
     return 0;
 
     
@@ -45,7 +46,6 @@ struct vm_state *initialize_vm()
 
     newvm->pc=0;
     newvm->acc=0;
-    newvm->cycles=0;
     
     for(i = 0; i < MAX_BREAKPOINTS; i++) 
     {
@@ -205,6 +205,6 @@ uint32_t run_vm(struct vm_state *myvm, uint32_t runcycles)
         }
 
     }
-
+    return cycle;
 }
 
