@@ -174,9 +174,36 @@ uint32_t run_vm(struct vm_state *myvm, uint32_t runcycles)
        if runcycles == 0, we run for infinitely many cycles */
 {
     uint32_t cycle;
-
+    uint16_t ins, opcode, addr;
     for (cycle = 0; (cycle < runcycles) || (runcycles == 0 ); cycle ++)
     {
+        ins = myvm->memory[myvm->pc];
+        opcode = ins & 0xC000;
+        addr   = ins & 0x3fff;
+        
+        switch (opcode)
+        {
+            case 0x0000: /* nand */
+                break;
+            case 0x4000: /* add */
+                break;
+            case 0x8000: /* store */
+                break;
+            case 0xC000: /* jump if carry not set */
+                break;
+            default:
+                assert (1 == 0);
+        }
+
+
+
+         
+
+        if (myvm->pc == RESET_VECTOR)
+        {
+            return cycle;
+        }
+
     }
 
 }
