@@ -14,6 +14,7 @@
 
 struct vm_state *initialize_vm();
 void load_vm(struct vm_state *vm, FILE *infile);
+void dump_vm(struct vm_state *vm, FILE *infile);
 uint32_t run_vm(struct vm_state *myvm, uint32_t runcycles);
 struct vm_state
 {

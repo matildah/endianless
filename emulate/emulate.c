@@ -160,6 +160,11 @@ void load_vm(struct vm_state *vm, FILE *infile)
 }
 
 
+void dump_vm(struct vm_state *vm, FILE *infile) 
+    /* dumps the memory contents to a file */
+{
+}
+
 
 uint32_t run_vm(struct vm_state *myvm, uint32_t runcycles) 
     /* runs the VM described at myvm for runcycles cycles and returns the number
