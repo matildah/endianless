@@ -44,9 +44,15 @@ struct vm_state *initialize_vm()
     newvm = (struct vm_state *)malloc(sizeof(struct vm_state));
     assert(newvm != NULL);
 
-    newvm->pc=0;
-    newvm->acc=0;
+    newvm->pc = RESET_VECTOR;
+    newvm->acc = 0;
     
+    for (i = 0; i < MEMORY_SIZE; i++)
+    {
+        newvm->memory[i] = 0xFFFF;
+    }
+
+
     return newvm;
 
 }
