@@ -130,6 +130,7 @@ void load_vm(struct vm_state *vm, FILE *infile)
                        function */
 
                     fprintf(stderr, "we didn't read any words into the memory array, are you sure all is OK?\n");
+                    exit(2);
                 }
             fprintf(stderr, "we read %ld words into memory\n", curwrite - vm->memory);
             return; /* our work here is done 'cuz we don't have anything more
@@ -163,6 +164,7 @@ void load_vm(struct vm_state *vm, FILE *infile)
 void dump_vm(struct vm_state *vm, FILE *infile) 
     /* dumps the memory contents to a file */
 {
+
 }
 
 
