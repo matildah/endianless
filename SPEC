@@ -56,6 +56,7 @@ acc <- acc ADD *address
 if the addition generates a carry out of the most significant bit, the carry 
 flag is set. 
 
+if the addition does not generate a carry out, the carry flag is unset.
 
 10 STORE [address]
 *address <- acc

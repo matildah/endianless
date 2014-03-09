@@ -192,6 +192,7 @@ uint32_t run_vm(struct vm_state *myvm, uint32_t runcycles)
 
             case 0x4000: /* add */
                 myvm->pc  = (myvm->pc + 1) % MEMORY_SIZE;
+                myvm->acc = myvm->acc & 0xFFFF; /* clear carry bit */
                 myvm->acc = (myvm->acc + myvm->memory[addr]);
                 break;
 
