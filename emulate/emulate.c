@@ -184,17 +184,29 @@ uint32_t run_vm(struct vm_state *myvm, uint32_t runcycles)
         switch (opcode)
         {
             case 0x0000: /* nand */
-                myvm->pc = (myvm->pc + 1) % MEMORY_SIZE
+                myvm->pc = (myvm->pc + 1) % MEMORY_SIZE;
                 break;
+
             case 0x4000: /* add */
-                myvm->pc = (myvm->pc + 1) % MEMORY_SIZE
+                myvm->pc = (myvm->pc + 1) % MEMORY_SIZE;
                 break;
+
             case 0x8000: /* store */
-                myvm->pc = (myvm->pc + 1) % MEMORY_SIZE
+                myvm->pc = (myvm->pc + 1) % MEMORY_SIZE;
                 break;
+
             case 0xC000: /* jump if carry not set */
+                if (myvm->acc & 0x10000 == 0x10000) /* test carry bit */
+                { /* carry bit is set */
+                    myvm->acc = myvm->acc & 0xFFFF; /* clear carry bit */
+                    myvm->pc = (myvm->pc + 1) % MEMORY_SIZE;
+                    break;
+                }
+                /* carry is not set, so we must jump */ 
+                myvm->pc = addr; /* jump to the given address */
                 break;
-            default:
+
+            default: /* this never, ever, should be reached */
                 assert (1 == 0);
         }
 
