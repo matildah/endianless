@@ -47,11 +47,6 @@ struct vm_state *initialize_vm()
     newvm->pc=0;
     newvm->acc=0;
     
-    for(i = 0; i < MAX_BREAKPOINTS; i++) 
-    {
-        newvm->breakpoints[i]=RESET_VECTOR;
-    }
-
     return newvm;
 
 }
@@ -109,8 +104,8 @@ void load_vm(struct vm_state *vm, FILE *infile)
         
         if (read_a != read_b)
         {
-        fprintf(stderr,"odd number of bytes in memory dump file \n");
-        exit(2);
+            fprintf(stderr,"error: odd number of bytes in memory dump file \n");
+            exit(2);
         }
 
         if (read_a != 1 || read_b != 1 )

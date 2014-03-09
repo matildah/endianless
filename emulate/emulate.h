@@ -26,9 +26,6 @@ struct vm_state
     uint16_t memory[MEMORY_SIZE];     /* memory for the cpu, 2^14 elements, each 
                                    2 bytes wide */
 
-    uint16_t breakpoints[MAX_BREAKPOINTS]; /* array of addresses at which we 
-                                              stop execution */
-
 };
 
 
