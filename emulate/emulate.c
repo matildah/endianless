@@ -54,7 +54,7 @@ struct vm_state *initialize_vm()
 
 void load_vm(struct vm_state *vm, FILE *infile) 
 {
-    /* read, byte by byte, an input memory image file, and very other byte, we 
+    /* read, byte by byte, an input memory image file, and every other byte, we 
        convert the last two bytes into one 16 bit quantity and shove it into 
        the vm->memory array. Notice we don't need to know the endianness of the
        system this is running on.
