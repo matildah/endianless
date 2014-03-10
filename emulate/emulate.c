@@ -30,6 +30,7 @@ int main(int argc, char **argv)
 
     myvm = initialize_vm();
     load_vm(myvm, in);
+    dump_vm(myvm, out);
     run_vm(myvm, runcycles);
     return 0;
 
@@ -85,8 +86,8 @@ void load_vm(struct vm_state *vm, FILE *infile)
 
        */
 
-    int read_a = 0;             /* numbers of bytes read in the first fread call */
-    int read_b = 0;             /* numbers of bytes read in the second fread call */
+    size_t read_a = 0;             /* numbers of bytes read in the first fread call */
+    size_t read_b = 0;             /* numbers of bytes read in the second fread call */
     
 
     uint8_t a = 0, b = 0;       /* where we store each byte pair after reading it but
@@ -182,7 +183,8 @@ void dump_vm(struct vm_state *vm, FILE *outfile)
        than the least significant byte. 
        */
 {
-    int i, rval_a, rval_b;
+    int i;
+    size_t rval_a, rval_b;
     uint8_t a, b;
 
     for (i = 0; i < MEMORY_SIZE; i++)
