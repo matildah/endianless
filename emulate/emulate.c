@@ -167,9 +167,36 @@ void load_vm(struct vm_state *vm, FILE *infile)
 }
 
 
-void dump_vm(struct vm_state *vm, FILE *infile) 
-    /* dumps the memory contents to a file */
+void dump_vm(struct vm_state *vm, FILE *outfile) 
+    /* dumps the memory contents to a file. as with load_vm, we arbitrarily 
+       set the byte order to be big endian -- this means that a memory 
+       dump file with initial four bytes:
+
+       A_1        B_1           A_2         B_2
+
+       gets translated to the 16-bit words:
+
+       A_1 * 256 + B_1          A_2 * 256 + B_2
+
+       in other words, the most significant byte comes first / has lower address
+       than the least significant byte. 
+       */
 {
+    int i, rval_a, rval_b;
+    uint8_t a, b;
+
+    for (i = 0; i < MEMORY_SIZE; i++)
+    {
+        a = (vm->memory[i] & 0xff00) >> 8;
+        b = vm->memory[i] & 0x00ff;
+        
+        rval_a = fwrite(&a, 1, 1, outfile);
+        assert (1 == rval_a);
+        rval_b = fwrite(&b, 1, 1, outfile);
+        assert (1 == rval_b);
+
+    }
+
 
 }
 
@@ -208,7 +235,7 @@ uint32_t run_vm(struct vm_state *myvm, uint32_t runcycles)
                 break;
 
             case 0xC000: /* jump if carry not set */
-                if (myvm->acc & 0x10000 == 0x10000) /* test carry bit */
+                if ((myvm->acc & 0x10000) == 0x10000) /* test carry bit */
                 { /* carry bit is set */
                     myvm->acc = myvm->acc & 0xFFFF; /* clear carry bit */
                     myvm->pc = (myvm->pc + 1) % MEMORY_SIZE;
