@@ -30,8 +30,8 @@ int main(int argc, char **argv)
 
     myvm = initialize_vm();
     load_vm(myvm, in);
-    dump_vm(myvm, out);
     run_vm(myvm, runcycles);
+    dump_vm(myvm, out);
     return 0;
 
     
@@ -45,7 +45,7 @@ struct vm_state *initialize_vm()
     newvm = (struct vm_state *)malloc(sizeof(struct vm_state));
     assert(newvm != NULL);
 
-    newvm->pc = RESET_VECTOR;
+    newvm->pc = 0;
     newvm->acc = 0;
     
     for (i = 0; i < MEMORY_SIZE; i++)
