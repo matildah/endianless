@@ -74,10 +74,10 @@ while (<INF>) {
            $opcode = $addr;
        }
        if ($1 eq "ADD"){
-           $opcode = 64 + $addr;
+           $opcode = 16384 + $addr;
        }
        if ($1 eq "ST"){
-           $opcode = 128 + $addr;
+           $opcode = 32768 + $addr;
        }
        $goodline = 1;
    }
@@ -86,7 +86,7 @@ while (<INF>) {
    if (/(JNC)(\s+)(\w+)/){
        die "bad loc '$3'" if !exists($locs{$3});
        my $l = $locs { $3};
-       $opcode = 192 + $l;
+       $opcode = 49152 + $l;
        $goodline = 1;
    }
 
@@ -104,6 +104,12 @@ while (<INF>) {
     if (/(\w+)(\s+)DB(\s+)(\w+)/) {
         my $val=$4;
         if(length($val) == 1){
+            $val = "000" . $val;
+        }
+        if(length($val) == 2){
+            $val = "00" . $val;
+        }
+        if(length($val) == 3){
             $val = "0" . $val;
         }
 
@@ -119,8 +125,14 @@ while (<INF>) {
    $addy++;
    $opcode = sprintf("%x", $opcode);
    
-   if(length($opcode) eq 1){
+   if(length($opcode) eq 3){
        $opcode = "0" . $opcode;
+   }
+   if(length($opcode) eq 2){
+       $opcode = "00" . $opcode;
+   }
+   if(length($opcode) eq 1){
+       $opcode = "000" . $opcode;
    }
 
 
@@ -128,6 +140,6 @@ while (<INF>) {
 
    $goodline = 0;
 }
-$addy--;
-print "00\n" x (63 - $addy);
+#$addy--;
+#print "00\n" x (63 - $addy);
 
