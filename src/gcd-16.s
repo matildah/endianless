@@ -5,7 +5,7 @@
 ; Revision history
 ; 16 Nov 2009 [scrubbed] : Began implementation
 ; 16 Nov 2009 [scrubbed] : Finished and tested implementation
-
+; 11 Mar 2014 matilda    : converted to 16 bit
 
 
 
@@ -83,9 +83,9 @@ ST res ; we set the breakpoint here, so the result has already been stored in
 
 ;Constants
 ZERO    DB  0  ; all bits zero
-ONES    DB  FF ; all bits one
+ONES    DB  FFFF ; all bits one
 ONE     DB  1  ; one
-HM      DB  80 ; the 8-bit number with only the MSB high
+HM      DB  8000 ; the 16-bit number with only the MSB high
 
 ;Variables
 TMP     DB  00 ; temporary variable
