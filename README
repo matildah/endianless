@@ -14,7 +14,7 @@ This architecture is based on the architecture I used at [redacted] class at
 [redacted] university, which worked on 8-bit words and had a 6 bit address 
 space. In the original arch, instructions were a byte long (opcode takes up two
 bits, address takes up six). I extended the instruction size to two bytes (two 
-bis for opcode, 14 for address). I then decided to increase the word size from 
+bits for opcode, 14 for address). I then decided to increase the word size from 
 one byte to two -- otherwise it's impossible to hold an address nor an 
 instruction in the accumulator. These are the only changes that have been made.
 
