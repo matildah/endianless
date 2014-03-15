@@ -80,6 +80,8 @@ NAND ONES
 ST res 
 ST res ; we set the breakpoint here, so the result has already been stored in
 ; the memory location res
+JNC end
+JNC end
 
 ;Constants
 ZERO    DB  0  ; all bits zero
@@ -91,6 +93,9 @@ HM      DB  8000 ; the 16-bit number with only the MSB high
 TMP     DB  00 ; temporary variable
 
 ; Inputs/outputs
-a       DB C3 ; 35 in hex
-b       DB 9C ; 49 in hex
+a       DB C3 ; 195 in hex
+b       DB 9C ; 156 in hex
 res     DB 00 ; result goes here.
+
+end:
+
