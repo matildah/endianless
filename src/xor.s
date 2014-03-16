@@ -1,19 +1,19 @@
+JNC xor
+JNC xor
+
 ZERO    DB  0  ; all bits zero
-ONES    DB  FF ; all bits one
+ONES    DB  FFFF ; all bits one
 
 
 
 T1 DB  00 ; temporary variable
 T2     DB  00 ; temporary variable
 
-Atemp       DB C3 ; 35 in hex
-Btemp       DB 9C ; 49 in hex
+Atemp       DB abcc
+Btemp       DB de55 
 rtemp     DB 00 ; result goes here.
 
 xor:
-NAND ZERO
-NAND ONES
-
 
 NAND ZERO ; FF
 NAND ONES ; 00 
