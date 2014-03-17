@@ -10,17 +10,17 @@ ONES        DB FFFF     ; all bits one
 ONE         DB 0001     ; one
 TWO         DB 0002     ; two
 
-Alow        DB FEED     ; low part of the first addend
+Alow        DB FFFF     ; low part of the first addend
 Ahigh       DB FACE     ; high part of first addend
 
-Blow        DB ABAD     ; low part of second addend
+Blow        DB FFFF     ; low part of second addend
 Bhigh       DB F00D     ; high part of second addend
 
 ResLow      DB 0000     ; result low part
 ResHigh     DB 0000     ; result high part
 
 
-carryin     DB 0000     ; carry in
+carryin     DB 0001     ; carry in
 carryout    DB 0000     ; carry out
 
 intercarry  DB 0000     ; stores the carry of carryin + Alow + Blow
@@ -65,5 +65,40 @@ ST intercarry
 
 
 nextadd2:
+high:
+
+NAND ZERO           ; acc = 0xFFFF
+NAND ONES           ; acc = 0x0000
+ST carryout         ; zero the carry     
+ADD intercarry      ; acc = intercarry
+
+ADD Ahigh           ; acc = intercarry + Ahigh
+JNC nextadd3        ; no carry generated, we can continue as normal
+JNC nextadd3_carry  ; a carry was generated, so we need to go to the code that
+                    ; sets carryout to 1
+
+nextadd3_carry:
+ST temp             ; store Ahigh + intercarry into the temporary
+NAND ZERO           ; acc = 0xffff
+ADD TWO             ; acc = 1
+ST carryout         ; carryout = 1 
+
+NAND ZERO
+NAND ONES
+ADD temp            ; acc = Ahigh + intercarry
+
+nextadd3:
+ADD Bhigh
+
+ST ResHigh
+
+JNC nextadd4        ; no carry generated
+JNC nextadd4_carry  ; carry generated, need to set carryout = 1 
 
 
+nextadd4_carry:
+NAND ZERO
+ADD TWO
+ST carryout
+
+nextadd4:
