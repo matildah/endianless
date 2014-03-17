@@ -35,8 +35,8 @@ ST intercarry       ; zero the carry
 ADD carryin         ; acc = carryin
 
 ADD Alow            ; acc = carryin + Alow
-jnc nextadd1        ; no carry generated, we can continue as normal
-jnc nextadd1_carry  ; a carry was generated, so we need to go to the code that
+JNC nextadd1        ; no carry generated, we can continue as normal
+JNC nextadd1_carry  ; a carry was generated, so we need to go to the code that
                     ; sets intercarry to 1
 
 nextadd1_carry:
@@ -54,8 +54,8 @@ ADD Blow
 
 ST ResLow
 
-jnc nextadd2        ; no carry generated
-jnc nextadd2_carry  ; carry generated, need to set intercarry = 1 
+JNC nextadd2        ; no carry generated
+JNC nextadd2_carry  ; carry generated, need to set intercarry = 1 
 
 
 nextadd2_carry:
