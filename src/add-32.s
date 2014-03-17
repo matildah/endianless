@@ -23,7 +23,7 @@ ResHigh     DB 0000     ; result high part
 carryin     DB 0000     ; carry in
 carryout    DB 0000     ; carry out
 
-intercarry  DB 0000     ; stores the carry of Alow + Blow
+intercarry  DB 0000     ; stores the carry of carryin + Alow + Blow
 
 temp        DB 0000     ; temporary storage location
 
