@@ -10,17 +10,17 @@ ONES        DB FFFF     ; all bits one
 ONE         DB 0001     ; one
 TWO         DB 0002     ; two
 
-Alow        DB FFFF     ; low part of the first addend
-Ahigh       DB FACE     ; high part of first addend
+Ahigh       DB FEED     ; high part of first addend
+Alow        DB FACE     ; low part of the first addend
 
-Blow        DB FFFF     ; low part of second addend
-Bhigh       DB F00D     ; high part of second addend
+Bhigh       DB ABAD     ; high part of second addend
+Blow        DB F00D     ; low part of second addend
 
-ResLow      DB 0000     ; result low part
 ResHigh     DB 0000     ; result high part
+ResLow      DB 0000     ; result low part
 
 
-carryin     DB 0001     ; carry in
+carryin     DB 0000     ; carry in
 carryout    DB 0000     ; carry out
 
 intercarry  DB 0000     ; stores the carry of carryin + Alow + Blow
